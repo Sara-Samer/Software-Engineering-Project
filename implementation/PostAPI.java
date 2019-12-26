@@ -30,7 +30,7 @@ public class PostAPI{
 		return null;
     }
     
-	public static Post[] findPostByHashtags(HashTag[] hashtags){
+	public static Post[] findPostByHashtags(Hashtag[] hashtags){
 		return null;
     }
 }
