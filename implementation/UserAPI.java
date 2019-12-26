@@ -1,5 +1,12 @@
 class UserAPI{
-    static User signup(String firstname, String lastname, String password, String birthdate, boolean is_male, Country country){
+    static User signup(String firstname, String lastname, String email, String password, String birthdate, boolean is_male, Country country){
+        Database db = new Database();
+        if(db.getUserByEmail(email) != null)
+            throw new Exception("Email exists");
+        if(firstname.trim().length() == 0)
+            throw new Exception("Firstname cannot be empty");
+        if(password.trim().length() == 0)
+            throw new Exception("Password cannot be empty");
         User user = new User();
         user.firstname = firstname;
         user.lastname = lastname;
@@ -7,7 +14,6 @@ class UserAPI{
         user.birthdate = birthdate;
         user.is_male = is_male;
         user.country = country;
-        Database db = new Database();
         db.addUser(user);
         return user;
     }
