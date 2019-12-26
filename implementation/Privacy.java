@@ -1,1 +1,5 @@
-class Privacy{}
+
+public class Privacy{
+	enum Privacy {
+    };
+}
