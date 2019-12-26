@@ -7,6 +7,7 @@ public class PageAPI {
 		return page;
 	}
 	public boolean followPage(User user , Page page) {
+		return true;
 	}
 	public Page findPageByName(String name) {
 		Page page = new Page();
