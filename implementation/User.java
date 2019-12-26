@@ -5,7 +5,16 @@ class User {
     boolean is_male;
     String profile_picture_url;
 
-    User(){}
+    User(String firstname, String lastname, String password, String email, String birthdate, boolean is_male, String profile_pic, Country country){
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.password = password;
+        this.email = email;
+        this.birthdate = birthdate;
+        this.country = country;
+        this.is_male = is_male;
+        this.profile_picture_url = profile_pic;
+    }
     User(User u){
         this.firstname = u.firstname;
         this.lastname = u.lastname;
