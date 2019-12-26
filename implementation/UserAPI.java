@@ -1,5 +1,6 @@
 class UserAPI{
     static User signup(String firstname, String lastname, String email, String password, String birthdate, boolean is_male, Country country) throws Exception{
+
         Database db = Database.getInstance();
         if(db.getUserByEmail(email) != null)
             throw new Exception("Email exists");
