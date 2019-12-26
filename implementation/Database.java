@@ -6,12 +6,17 @@ import java.util.Random;
 
 class Database{
 	ArrayList<User> users = new ArrayList<User>();
+	ArrayList<PremiumUser> pUsers= new ArrayList<PremiumUser>(); 
 	Map<String , User> userToken = new HashMap<String , User>();
 	Map<User , String> reverseUserToken = new HashMap<User , String>();
     private static Database instance = null;
 
 	public void addUser(User user){
 		users.add(user);
+	}
+	
+	public void addPremiumUser(PremiumUser pUser) {
+		pUsers.add(pUser);
 	}
 
 	public User getUserByEmail(String mail){
