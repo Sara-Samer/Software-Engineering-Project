@@ -11,6 +11,7 @@ class UserAPI{
         User user = new User();
         user.firstname = firstname;
         user.lastname = lastname;
+        user.email = email;
         user.password = password;
         user.birthdate = birthdate;
         user.is_male = is_male;
@@ -22,7 +23,7 @@ class UserAPI{
     static String login(String email, String password){
         Database db = Database.getInstance();
         User u = db.getUserByEmail(email);
-        if(u.password.equals(password)){
+        if(u != null && u.password.equals(password)){
             return db.getUserToken(u);
         }
         return null;
