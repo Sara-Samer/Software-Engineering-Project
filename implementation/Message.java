@@ -1,5 +1,5 @@
 class Message{
-    User sender, reciever;
+    User sender;
     String content;
     boolean is_read;
     void setAsRead(){}
