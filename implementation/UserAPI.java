@@ -1,5 +1,17 @@
 class UserAPI{
-    static User signup(String name, String password, String birthdate, boolean is_male, Country country){return new User();}
+    static User signup(String firstname, String lastname, String password, String birthdate, boolean is_male, Country country){
+        User user = new User();
+        user.firstname = firstname;
+        user.lastname = lastname;
+        user.password = password;
+        user.birthdate = birthdate;
+        user.is_male = is_male;
+        user.country = country;
+        Database db = new Database();
+        db.addUser(user);
+        return db;
+    }
+
     static User login(String email, String password){return new User();}
     static User getUserByToken(String token){return new User();}
     static User[] findUsersByName(String name){return new User[0];}
