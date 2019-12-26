@@ -1,1 +1,3 @@
-class Notification {}
+class Notification {
+	User recipent;
+}

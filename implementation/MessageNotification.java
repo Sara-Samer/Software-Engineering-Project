@@ -1,1 +1,3 @@
-class MessageNotification extends Notification{}
+class MessageNotification extends Notification{
+	Message message;
+}
