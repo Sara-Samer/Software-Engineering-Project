@@ -1,4 +1,4 @@
 
-public class PublicGroup implements Group{
+public class PublicGroup extends Group{
 	
 }
