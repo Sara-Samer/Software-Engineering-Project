@@ -8,6 +8,8 @@ class Database{
 	ArrayList<User> users = new ArrayList<User>();
 	Map<String , User> userToken = new HashMap<String , User>();
 	Map<User , String> reverseUserToken = new HashMap<User , String>();
+    private static Database instance = null;
+
 	public void addUser(User user){
 		users.add(user);
 	}
@@ -40,4 +42,9 @@ class Database{
 		}
 		return token;
 	}
+    public static Database getInstance(){
+        if(instance == null)
+            instance = new Database();
+        return instance;
+    }
 }
