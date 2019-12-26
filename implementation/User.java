@@ -4,7 +4,7 @@ class User {
     String birthdate;
     boolean is_male;
     String profile_picture_url;
-
+    User(){}
     User(String firstname, String lastname, String password, String email, String birthdate, boolean is_male, String profile_pic, Country country){
         this.firstname = firstname;
         this.lastname = lastname;
