@@ -1,0 +1,1 @@
+class FreeUser extends User {}
