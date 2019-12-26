@@ -20,5 +20,5 @@ public class Page {
         this.followers = followers;
     }
     public void savePageInfo(Page pageInfo) { }
-    public boolean addAdmin(User user) { return false; }
+    public void addAdmin(User user) { }
 }
