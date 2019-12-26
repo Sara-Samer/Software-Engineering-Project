@@ -13,7 +13,7 @@ public class PostAPI{
     	
     }
     
-	public static Ad createAd(PremiumUser user, String header, String[2] headerlines, String description){
+	public static Ad createAd(PremiumUser user, String header, String[] headerlines, String description){
     	
     }
     
