@@ -21,4 +21,22 @@ public class Page {
     }
     public void savePageInfo(Page pageInfo) { }
     public void addAdmin(User user) { }
+    
+    //setters
+    public void setPageName(String pageName) { this.pageName = pageName; }
+    public void setDescription(String description) {this.description = description; }
+    public void setAddress(String address) {this.address = address; }
+    public void setphoneNumber(String phoneNumber) {this.phoneNumber = phoneNumber; }
+    public void setPicture(BufferedImage picture) {this.picture = picture; }
+    public void setAdmind(User[] admins) {this.admins = admins; }
+    public void setFollowers(User[] followers) { this.followers = followers; }
+    
+    //getters
+    public String getPageName() { return pageName; }
+    public String getDescription(){ return description;}
+    public String getAddress() { return address;}
+    public String getPhoneNumber() {return phoneNumber; }
+    public BufferedImage getPicture() {return picture; }
+    public User[] getAdmins() { return admins; }
+    public User[] getFollowers() { return followers; }
 }
