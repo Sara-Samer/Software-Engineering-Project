@@ -9,7 +9,7 @@ class UserAPI{
         user.country = country;
         Database db = new Database();
         db.addUser(user);
-        return db;
+        return user;
     }
 
     static User login(String email, String password){return new User();}
