@@ -1,1 +1,4 @@
-class PaymentAccount {}
+class PaymentAccount {
+    String creditCardNumber;
+    String holderName;
+}
