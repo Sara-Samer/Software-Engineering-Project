@@ -47,6 +47,7 @@ class UserAPI{
         PremiumUser pu = new PremiumUser(user);
         pu.account = account;
         db.addPremiumUser(pu);
+        db.removeUser(user);
         return pu;
     }
     static boolean updateUserPassword(User user, String new_password){return false;}
