@@ -1,3 +1,3 @@
 class GroupMessage extends Message{
-    User[] recipents;
+    private User[] recipents;
 }

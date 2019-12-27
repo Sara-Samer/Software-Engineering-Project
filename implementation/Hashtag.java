@@ -1,3 +1,4 @@
 class Hashtag{
-    Post[] getPosts(){return new Post[0];}
+	private Post[] posts;
+    public Post[] getPosts(){return posts;}
 }

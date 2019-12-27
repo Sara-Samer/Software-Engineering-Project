@@ -1,7 +1,7 @@
 class Message{
-    User sender;
-    String content;
-    boolean is_read;
-    void setAsRead(){}
-    MessageNotification createNotification(){return new MessageNotification();}
+    private User sender;
+    private String content;
+    private boolean is_read;
+    public void setAsRead(){}
+    public MessageNotification createNotification(){return new MessageNotification();}
 }

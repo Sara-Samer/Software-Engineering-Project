@@ -1,3 +1,3 @@
 class MessageNotification extends Notification{
-	Message message;
+	private Message message;
 }
