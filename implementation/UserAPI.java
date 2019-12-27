@@ -50,5 +50,11 @@ class UserAPI{
         return pu;
     }
     static boolean updateUserPassword(User user, String new_password){return false;}
-    static boolean addFriend(User sender, User reciever){return false;}
+    static boolean addFriend(User sender, User reciever){
+    	if(sender.getFriendsList().contains(reciever))
+    		return false;
+    	reciever.addToFriendRequests(sender);
+    	FriendRequest friendRequest = new FriendRequest(sender , reciever);
+    	return friendRequest.getResponse();
+    }
 }
