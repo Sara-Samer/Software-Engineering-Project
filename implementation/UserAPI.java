@@ -51,7 +51,10 @@ class UserAPI{
     }
     static boolean updateUserPassword(User user, String new_password){return false;}
     static boolean addFriend(User sender, User reciever){
+    	Database db = Database.getInstance();
     	if(sender.getFriendsList().contains(reciever))
+    		return false;
+    	if(!db.users.contains(reciever) && !db.pUsers.contains(reciever))
     		return false;
     	reciever.addToFriendRequests(sender);
     	FriendRequest friendRequest = new FriendRequest(sender , reciever);
