@@ -45,7 +45,7 @@ class UserAPI{
         if(!account.getHolderName().equals(user.firstname + ' ' + user.lastname))
             throw new Exception("You are not the holder of this card");
         PremiumUser pu = new PremiumUser(user);
-        pu.account = account;
+        pu.setPaymentAccount(account);
         db.addPremiumUser(pu);
         db.removeUser(user);
         return pu;
