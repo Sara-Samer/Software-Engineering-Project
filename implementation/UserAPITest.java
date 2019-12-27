@@ -149,4 +149,22 @@ public class UserAPITest {
 	public void friendRequest(User sender, User reciever, boolean expected){
 		Assert.assertEquals(UserAPI.addFriend(sender, reciever), expected);
 	}
+	
+	@DataProvider(name = "acceptFriendRequest")
+	public Object[][] testAcceptFriendRequest(){
+		Database db = Database.getInstance();
+		return new Object[][]{
+			{db.getUserByToken("AhmedWessam"), db.getUserByToken("SaraSamer"), true},
+			//{db.getUserByToken("SaraSamer"), db.getUserByToken("AhmedWessam"), false},
+			//{db.getUserByToken("SalmaEssam"), new User() , false},
+			{db.getUserByToken("SalmaEssam"), db.getUserByToken("firstlast") , true},
+		};
+	}
+	
+	@Test(dataProvider = "acceptFriendRequest", enabled = true)
+	public void acceptFriendRequest(User sender, User reciever, boolean expected){
+		FriendRequest fr = new FriendRequest(sender , reciever);
+		fr.setResponse(expected);
+		Assert.assertEquals(fr.getResponse() , expected);
+	}
 }

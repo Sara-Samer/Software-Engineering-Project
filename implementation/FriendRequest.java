@@ -1,23 +1,29 @@
 class FriendRequest extends Notification{
     private User friend;
     private User sender;
-    boolean response;
-    FriendRequest(User sender , User friend){
+    private boolean response;
+    public FriendRequest(User sender , User friend){
     	this.friend = friend;
     	this.sender = sender;
     }
-    boolean getResponse() {
+    public boolean getResponse() {
     	return response;
     }
-    void setResponse(boolean response) {this.response = response;}
-    boolean accept(){
+    public void setResponse(boolean response) {
+    	//this.response = response;
+    	if(response == true)
+    		this.response = accept();
+    	else
+    		this.response = reject();
+    }
+    public boolean accept(){
     	friend.removeFromFriendRequests(sender);
     	friend.addToFriendsList(sender);
     	sender.addToFriendsList(friend);
     	setResponse(true);
     	return true;
     }
-    boolean reject(){
+    public boolean reject(){
     	friend.removeFromFriendRequests(sender);
     	setResponse(false);
     	return false;
