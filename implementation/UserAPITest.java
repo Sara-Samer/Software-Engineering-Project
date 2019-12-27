@@ -154,10 +154,10 @@ public class UserAPITest {
 	public Object[][] testAcceptFriendRequest(){
 		Database db = Database.getInstance();
 		return new Object[][]{
-			{db.getUserByToken("AhmedWessam"), db.getUserByToken("SaraSamer"), true},
+			{db.getUserByToken("SaraSamer"), db.getUserByToken("AhmedWessam"), true},
 			//{db.getUserByToken("SaraSamer"), db.getUserByToken("AhmedWessam"), false},
 			//{db.getUserByToken("SalmaEssam"), new User() , false},
-			{db.getUserByToken("SalmaEssam"), db.getUserByToken("firstlast") , false},
+			{db.getUserByToken("firstlast"), db.getUserByToken("SalmaEssam") , false},
 		};
 	}
 	
