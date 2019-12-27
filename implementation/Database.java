@@ -3,12 +3,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 class Database{
-	ArrayList<User> users = new ArrayList<User>();
-	ArrayList<PremiumUser> pUsers= new ArrayList<PremiumUser>(); 
-	Map<String , User> userToken = new HashMap<String , User>();
-	Map<User , String> reverseUserToken = new HashMap<User , String>();
+	private static ArrayList<User> users = new ArrayList<User>();
+	private static ArrayList<PremiumUser> pUsers= new ArrayList<PremiumUser>(); 
+	private static Map<String , User> userToken = new HashMap<String , User>();
+	private static Map<User , String> reverseUserToken = new HashMap<User , String>();
     private static Database instance = null;
-
+    
+    public ArrayList<User> getUsers(){return this.users;}
+    public ArrayList<PremiumUser> getPremiumUsers(){return this.pUsers;}
+    
 	public void addUser(User user){
 		users.add(user);
 		this.getUserToken(user);
