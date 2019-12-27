@@ -1,3 +1,3 @@
 class PrivateMessage extends Message{
-    User reciever;
+    private User reciever;
 }

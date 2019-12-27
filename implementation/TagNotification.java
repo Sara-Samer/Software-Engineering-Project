@@ -1,3 +1,3 @@
 class TagNotification extends Notification{
-    Post target;
+    private Post target;
 }

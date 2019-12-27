@@ -104,8 +104,8 @@ public class UserAPITest {
 		PaymentAccount userPaymentAccount = premiumUser.getPaymentAccount();
 		PaymentAccount expectedPaymentAccount = ExpectedPremiumUser.getPaymentAccount();
 
-		Assert.assertEquals(userPaymentAccount.creditCardNumber, expectedPaymentAccount.creditCardNumber);
-		Assert.assertEquals(userPaymentAccount.holderName, expectedPaymentAccount.holderName);
+		Assert.assertEquals(userPaymentAccount.getCreditCardNumber(), expectedPaymentAccount.getCreditCardNumber());
+		Assert.assertEquals(userPaymentAccount.getHolderName(), expectedPaymentAccount.getHolderName());
 	}
 
 	@DataProvider(name = "upgradeUserException")

@@ -1,5 +1,5 @@
 class UserAPI{
-    static User signup(String firstname, String lastname, String email, String password, String birthdate, boolean is_male, Country country) throws Exception{
+    public static User signup(String firstname, String lastname, String email, String password, String birthdate, boolean is_male, Country country) throws Exception{
 
         Database db = Database.getInstance();
         if(db.getUserByEmail(email) != null)
@@ -22,7 +22,7 @@ class UserAPI{
         return user;
     }
 
-    static String login(String email, String password){
+    public static String login(String email, String password){
         Database db = Database.getInstance();
         User u = db.getUserByEmail(email);
         if(u != null && u.password.equals(password)){
@@ -31,14 +31,14 @@ class UserAPI{
         return null;
     }
 
-    static User getUserByToken(String token){
+    public static User getUserByToken(String token){
         Database db = Database.getInstance();
         return db.getUserByToken(token);
     }
 
-    static User[] findUsersByName(String name){return new User[0];}
-    static User findUserByEmail(String email){return new User();}
-    static PremiumUser upgradeUser(User user, PaymentAccount account) throws Exception{
+    public static User[] findUsersByName(String name){return new User[0];}
+    public static User findUserByEmail(String email){return new User();}
+    public static PremiumUser upgradeUser(User user, PaymentAccount account) throws Exception{
         Database db = Database.getInstance();
         if(account.getCreditCardNumber().length() != 6)
             throw new Exception("Credit card number is incorrect");
@@ -50,8 +50,8 @@ class UserAPI{
         db.removeUser(user);
         return pu;
     }
-    static boolean updateUserPassword(User user, String new_password){return false;}
-    static boolean addFriend(User sender, User reciever){
+    public static boolean updateUserPassword(User user, String new_password){return false;}
+    public static boolean addFriend(User sender, User reciever){
     	Database db = Database.getInstance();
     	if(sender.getFriendsList().contains(reciever))
     		return false;
