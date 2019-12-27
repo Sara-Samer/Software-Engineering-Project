@@ -53,12 +53,12 @@ class UserAPI{
     public static boolean updateUserPassword(User user, String new_password){return false;}
     public static boolean addFriend(User sender, User reciever){
     	Database db = Database.getInstance();
-    	if(sender.getFriendsList().contains(reciever))
+    	if(sender.getFriendsList().contains(reciever) || reciever.getFriendRequests().contains(sender))
     		return false;
     	if(!db.getUsers().contains(reciever) && !db.getPremiumUsers().contains(reciever))
     		return false;
     	reciever.addToFriendRequests(sender);
     	FriendRequest friendRequest = new FriendRequest(sender , reciever);
-    	return friendRequest.getResponse();
+    	return true;//friendRequest.getResponse();
     }
 }
