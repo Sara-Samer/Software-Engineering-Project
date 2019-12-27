@@ -1,3 +1,3 @@
 class Notification {
-	User recipent;
+	private User recipent;
 }
