@@ -18,7 +18,7 @@ public class UserAPITest{
 			  {"Salma","Essam","252525", "my.com", "27/8", false,null, user4}
 		  };
 	  }
-	  @Test(dataProvider = "testSignUp")
+	  @Test(dataProvider = "testSignUp", enabled = false)
 	  public void signUp (String firstname, String lastname, String password, String email, String birthdate, boolean is_male, Country country, User expectedUser) throws Exception{
 		  User user = UserAPI.signup(firstname, lastname, email, password, birthdate, is_male, country);
 		  Assert.assertEquals(user.firstname, expectedUser.firstname);
@@ -41,8 +41,26 @@ public class UserAPITest{
 		  };
 	  }
 	  
-	  @Test(dataProvider = "testLogin")
+	  @Test(dataProvider = "testLogin", enabled = true)
 	  public void logIn(String email, String password, String expectedToken) {
 		  Assert.assertEquals(UserAPI.login(email, password), expectedToken);
 	  }
+	  /*
+	   * A method created to unit test Login()
+	   */
+	  @BeforeTest(enabled = false)
+	  public void addUsersInDataBase(){
+		  System.out.println("Called!!");
+		  User user1 = new User("first","last","pass", "mail", "birth", true, "" , null);
+			User user2 = new User("Sara","Samer","123", "***@gmail.com", "9/1", false, "" , null);
+			User user3 = new User("Ahmed","Wessam","141414", "bad@boy.com", "24/8", true, "" , null);
+			User user4 = new User("Salma","Essam","252525", "my.com", "27/8", false, "" , null);
+			Database db;
+			db = Database.getInstance();
+			db.addUser(user1);
+			db.addUser(user2);
+			db.addUser(user3);
+			db.addUser(user4);
+	  }
+	  
 }
