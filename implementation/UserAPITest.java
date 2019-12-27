@@ -7,7 +7,7 @@ public class UserAPITest {
 	/*
 	 * A method created to unit test Login()
 	 */
-	@BeforeTest(enabled = false)
+	@BeforeTest(enabled = true)
 	public void addUsersInDataBase() {
 		User user1 = new User("first", "last", "pass", "mail", "birth", true, "", null);
 		User user2 = new User("Sara", "Samer", "123", "***@gmail.com", "9/1", false, "", null);
@@ -132,5 +132,21 @@ public class UserAPITest {
 	public void upgradeUserException(User user, PaymentAccount paymentAccount, PremiumUser ExpectedPremiumUser)
 			throws Exception {
 		UserAPI.upgradeUser(user, paymentAccount);
+	}
+	 
+	@DataProvider(name = "friendRequest")
+	public Object[][] testFriendRequest(){
+		Database db = Database.getInstance();
+		return new Object[][]{
+			{db.getUserByToken("SaraSamer"), db.getUserByToken("AhmedWessam"), true},
+			{db.getUserByToken("SaraSamer"), db.getUserByToken("AhmedWessam"), false},
+			{db.getUserByToken("SalmaEssam"), new User() , false},
+			{db.getUserByToken("firstlast"), db.getUserByToken("SalmaEssam") , true},
+		};
+	}
+	
+	@Test(dataProvider = "friendRequest", enabled = true)
+	public void friendRequest(User sender, User reciever, boolean expected){
+		Assert.assertEquals(UserAPI.addFriend(sender, reciever), expected);
 	}
 }
