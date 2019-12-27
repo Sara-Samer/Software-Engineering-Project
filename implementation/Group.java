@@ -3,9 +3,9 @@ import java.awt.image.BufferedImage;
 public class  Group{
 	private String groupName;
 	private BufferedImage Image;
-	private String descrption;
+	private String description;
 	private Privacy privacy;
-	private User[] user;
+	private User[] users;
 	private User[] admins;
 	private Post[] posts;
 	

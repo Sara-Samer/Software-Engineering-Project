@@ -1,5 +1,5 @@
 class GroupInvitation extends Notification{
-	Group group;
+	private Group group;
 	public static boolean accept() {
 		return true;
 	}

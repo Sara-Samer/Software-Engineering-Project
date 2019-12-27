@@ -1,6 +1,6 @@
 class FriendRequest extends Notification{
-    User friend;
-    User sender;
+    private User friend;
+    private User sender;
     boolean response;
     FriendRequest(User sender , User friend){
     	this.friend = friend;
