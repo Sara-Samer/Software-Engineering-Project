@@ -40,7 +40,7 @@ public class UserAPITest{
 			  {"Ahmed","Wessam","141414", "", "24/8", true,null}
 		  };
 	  }
-	  @Test(dataProvider = "testSignUpException", enabled = true, expectedExceptions = Exception.class)
+	  @Test(dataProvider = "testSignUpException", enabled = false, expectedExceptions = Exception.class)
 	  public void signUpException (String firstname, String lastname, String password, String email, String birthdate, boolean is_male, Country country) throws Exception{
 		  User user = UserAPI.signup(firstname, lastname, email, password, birthdate, is_male, country);
 		  Assert.assertEquals(user.firstname, "");
@@ -68,7 +68,6 @@ public class UserAPITest{
 	   */
 	  @BeforeTest(enabled = false)
 	  public void addUsersInDataBase(){
-		  System.out.println("Called!!");
 		  User user1 = new User("first","last","pass", "mail", "birth", true, "" , null);
 			User user2 = new User("Sara","Samer","123", "***@gmail.com", "9/1", false, "" , null);
 			User user3 = new User("Ahmed","Wessam","141414", "bad@boy.com", "24/8", true, "" , null);
@@ -80,5 +79,59 @@ public class UserAPITest{
 			db.addUser(user3);
 			db.addUser(user4);
 	  }
-	  
+	  @DataProvider(name = "upgradeUser")
+	  public Object[][] testUpgradeUser(){
+		  User user1 = new User("first","last","pass", "mail", "birth", true, "" , null);
+		  PaymentAccount user1PaymentAccount = new PaymentAccount("123456","first last");
+		  
+		  User user2 = new User("Sara","Samer","123", "***@gmail.com", "9/1", false, "" , null);
+		  PaymentAccount user2PaymentAccount = new PaymentAccount("141516","Sara Samer");
+		  
+		  User user3 = new User("Ahmed","Wessam","141414", "bad@boy.com", "24/8", true, "" , null);
+		  PaymentAccount user3PaymentAccount = new PaymentAccount("Saraaa","Ahmed Wessam");
+		  
+		  User user4 = new User("Salma","Essam","252525", "my.com", "27/8", false, "" , null);
+		  PaymentAccount user4PaymentAccount = new PaymentAccount("102030","Salma Essam");
+		  
+		  return new Object[][] {
+			  {user1, user1PaymentAccount, new PremiumUser(user1, user1PaymentAccount) },
+			  {user2, user2PaymentAccount, new PremiumUser(user2, user2PaymentAccount) },
+			  {user3, user3PaymentAccount, new PremiumUser(user3, user3PaymentAccount) },
+			  {user4, user4PaymentAccount, new PremiumUser(user4, user4PaymentAccount) },
+		  };  
+	  }
+	  @Test(dataProvider = "upgradeUser", enabled = true)
+	  public void upgradeUser(User user, PaymentAccount paymentAccount, PremiumUser ExpectedPremiumUser) throws Exception{
+		  PremiumUser premiumUser = UserAPI.upgradeUser(user, paymentAccount);
+		  PaymentAccount userPaymentAccount = premiumUser.getPaymentAccount();
+		  PaymentAccount expectedPaymentAccount = ExpectedPremiumUser.getPaymentAccount();
+		  
+		  Assert.assertEquals(userPaymentAccount.creditCardNumber, expectedPaymentAccount.creditCardNumber);
+		  Assert.assertEquals(userPaymentAccount.holderName, expectedPaymentAccount.holderName);
+	  }
+	  @DataProvider(name = "upgradeUserException")
+	  public Object[][] testUpgradeUserException(){
+		User user1 = new User("first","","pass", "", "birth", true, "" , null);
+		PaymentAccount user1PaymentAccount = new PaymentAccount("123456"," last");
+		
+		User user2 = new User("Sara","Samer","123", "***@gmail.com", "9/1", false, "" , null);
+		PaymentAccount user2PaymentAccount = new PaymentAccount("141516","Sara ");
+		
+		User user3 = new User("Ahmed","Wessam","141414", "bad@boy.com", "24/8", true, "" , null);
+		PaymentAccount user3PaymentAccount = new PaymentAccount("Sara","Ahmed Wessam");
+		
+		User user4 = new User("Salma","Essam","252525", "my.com", "27/8", false, "" , null);
+		PaymentAccount user4PaymentAccount = new PaymentAccount("1020312321310","Salma ");
+
+		return new Object[][] {
+			{user1, user1PaymentAccount, new PremiumUser(user1, user1PaymentAccount) },
+			{user2, user2PaymentAccount, new PremiumUser(user2, user2PaymentAccount) },
+			{user3, user3PaymentAccount, new PremiumUser(user3, user3PaymentAccount) },
+			{user4, user4PaymentAccount, new PremiumUser(user4, user4PaymentAccount) },
+		};  
+	  }
+	  @Test(dataProvider = "upgradeUserException", enabled = true, expectedExceptions = Exception.class)
+	  public void upgradeUserException(User user, PaymentAccount paymentAccount, PremiumUser ExpectedPremiumUser) throws Exception{
+		  UserAPI.upgradeUser(user, paymentAccount);
+	  }
 }
