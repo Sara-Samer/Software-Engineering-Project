@@ -55,7 +55,7 @@ class UserAPI{
     	Database db = Database.getInstance();
     	if(sender.getFriendsList().contains(reciever))
     		return false;
-    	if(!db.users.contains(reciever) && !db.pUsers.contains(reciever))
+    	if(!db.getUsers().contains(reciever) && !db.getPremiumUsers().contains(reciever))
     		return false;
     	reciever.addToFriendRequests(sender);
     	FriendRequest friendRequest = new FriendRequest(sender , reciever);
