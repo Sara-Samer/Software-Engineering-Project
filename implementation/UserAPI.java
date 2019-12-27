@@ -3,7 +3,9 @@ class UserAPI{
 
         Database db = Database.getInstance();
         if(db.getUserByEmail(email) != null)
-            throw new Exception("Email exists");
+        	throw new Exception("Email exists");
+        if(email.trim().length() == 0)
+            throw new Exception("Email cannot be empty");
         if(firstname.trim().length() == 0)
             throw new Exception("Firstname cannot be empty");
         if(password.trim().length() == 0)
