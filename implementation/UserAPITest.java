@@ -6,28 +6,46 @@ import org.testng.annotations.*;
 public class UserAPITest{
 	
 	@DataProvider(name = "testSignUp")
-	  public static Object[][] testSignUp(){
-		  User user1 = new User("first","last","pass", "mail", "birth", true, "" , null);
-		  User user2 = new User("Sara","Samer","123", "***@gmail.com", "9/1", false, "" , null);
-		  User user3 = new User("Ahmed","Wessam","141414", "bad@boy.com", "24/8", true, "" , null);
-		  User user4 = new User("Salma","Essam","252525", "my.com", "27/8", false, "" , null);
-		  return new Object[][] {
-			  {"first","last","pass", "mail","birth",true,null, user1},
-			  {"Sara","Samer","123", "***@gmail.com", "9/1", false, null, user2},
-			  {"Ahmed","Wessam","141414", "bad@boy.com", "24/8", true,null, user3},
-			  {"Salma","Essam","252525", "my.com", "27/8", false,null, user4}
+	public static Object[][] testSignUp(){
+		User user1 = new User("first","last","pass", "mail", "birth", true, "" , null);
+		User user2 = new User("Sara","Samer","123", "***@gmail.com", "9/1", false, "" , null);
+		User user3 = new User("Ahmed","Wessam","141414", "bad@boy.com", "24/8", true, "" , null);
+		User user4 = new User("Salma","Essam","252525", "my.com", "27/8", false, "" , null);
+		return new Object[][] {
+			{"first","last","pass", "mail","birth",true,null, user1},
+			{"Sara","Samer","123", "***@gmail.com", "9/1", false, null, user2},
+			{"Ahmed","Wessam","141414", "bad@boy.com", "24/8", true,null, user3},
+			{"Salma","Essam","252525", "my.com", "27/8", false,null, user4}
+		};
+	}
+	@Test(dataProvider = "testSignUp", enabled = false)
+	public void signUp (String firstname, String lastname, String password, String email, String birthdate, boolean is_male, Country country, User expectedUser) throws Exception{
+		User user = UserAPI.signup(firstname, lastname, email, password, birthdate, is_male, country);
+		Assert.assertEquals(user.firstname, expectedUser.firstname);
+		Assert.assertEquals(user.lastname, expectedUser.lastname);
+		Assert.assertEquals(user.email, expectedUser.email);
+		Assert.assertEquals(user.password, expectedUser.password);
+		Assert.assertEquals(user.birthdate, expectedUser.birthdate);
+		Assert.assertEquals(user.is_male, expectedUser.is_male);
+		Assert.assertEquals(user.country, expectedUser.country);
+	}
+	@DataProvider(name = "testSignUpException")
+	  public static Object[][] testSignUpException(){
+		/*
+		 * Cases that would causes the function to throw exception
+		 * */
+		 return new Object[][] {
+			  {"","last","pass", "mail","birth",true,null},
+			  {"Sara","Samer","", "***@gmail.com", "9/1", false, null},
+			  {"Ahmed","Wessam","141414", "", "24/8", true,null}
 		  };
 	  }
-	  @Test(dataProvider = "testSignUp", enabled = false)
-	  public void signUp (String firstname, String lastname, String password, String email, String birthdate, boolean is_male, Country country, User expectedUser) throws Exception{
+	  @Test(dataProvider = "testSignUpException", enabled = true, expectedExceptions = Exception.class)
+	  public void signUpException (String firstname, String lastname, String password, String email, String birthdate, boolean is_male, Country country) throws Exception{
 		  User user = UserAPI.signup(firstname, lastname, email, password, birthdate, is_male, country);
-		  Assert.assertEquals(user.firstname, expectedUser.firstname);
-		  Assert.assertEquals(user.lastname, expectedUser.lastname);
-		  Assert.assertEquals(user.email, expectedUser.email);
-		  Assert.assertEquals(user.password, expectedUser.password);
-		  Assert.assertEquals(user.birthdate, expectedUser.birthdate);
-		  Assert.assertEquals(user.is_male, expectedUser.is_male);
-		  Assert.assertEquals(user.country, expectedUser.country);
+		  Assert.assertEquals(user.firstname, "");
+		  Assert.assertEquals(user.email, "");
+		  Assert.assertEquals(user.password, "");
 	  }
 	@DataProvider(name = "testLogin")
 	  public static Object[][] testLogIn(){
@@ -41,7 +59,7 @@ public class UserAPITest{
 		  };
 	  }
 	  
-	  @Test(dataProvider = "testLogin", enabled = true)
+	  @Test(dataProvider = "testLogin", enabled = false)
 	  public void logIn(String email, String password, String expectedToken) {
 		  Assert.assertEquals(UserAPI.login(email, password), expectedToken);
 	  }
