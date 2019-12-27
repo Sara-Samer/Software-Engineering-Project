@@ -11,6 +11,7 @@ class Database{
 
 	public void addUser(User user){
 		users.add(user);
+		this.getUserToken(user);
 	}
 	
 	public void addPremiumUser(PremiumUser pUser) {
@@ -23,9 +24,7 @@ class Database{
 			String email = users.get(i).email;
 			if(email.equals(mail))
 				index = i;
-			System.out.println(email);
 		}
-		System.out.println("----------------");
 		return index == -1? null : users.get(index);
 	}
 	public User getUserByToken(String token) {
