@@ -14,6 +14,10 @@ class Database{
 		this.getUserToken(user);
 	}
 	
+	public void removeUser(User user) {
+		users.remove(user);
+	}
+	
 	public void addPremiumUser(PremiumUser pUser) {
 		pUsers.add(pUser);
 	}
