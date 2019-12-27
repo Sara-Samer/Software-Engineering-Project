@@ -40,9 +40,9 @@ class UserAPI{
     static User findUserByEmail(String email){return new User();}
     static PremiumUser upgradeUser(User user, PaymentAccount account) throws Exception{
         Database db = Database.getInstance();
-        if(account.creditCardNumber.length() != 16)
+        if(account.creditCardNumber.length() != 6)
             throw new Exception("Credit card number is incorrect");
-        if(account.holderName.equals(user.firstname + ' ' + user.lastname))
+        if(!account.holderName.equals(user.firstname + ' ' + user.lastname))
             throw new Exception("You are not the holder of this card");
         PremiumUser pu = new PremiumUser(user);
         pu.account = account;
