@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -142,12 +144,15 @@ public class UserAPITest {
 			{db.getUserByToken("SaraSamer"), db.getUserByToken("AhmedWessam"), false},
 			{db.getUserByToken("SalmaEssam"), new User() , false},
 			{db.getUserByToken("firstlast"), db.getUserByToken("SalmaEssam") , true},
+			{db.getUserByToken("SalmaEssam"), db.getUserByToken("firstlast") , false},
 		};
 	}
 	
 	@Test(dataProvider = "friendRequest", enabled = true)
 	public void friendRequest(User sender, User reciever, boolean expected){
-		Assert.assertEquals(UserAPI.addFriend(sender, reciever), expected);
+		boolean added = UserAPI.addFriend(sender, reciever);
+		ArrayList<User> requests = reciever.getFriendRequests();
+		Assert.assertEquals(added && requests.contains(sender), expected);
 	}
 	
 	@DataProvider(name = "acceptFriendRequest")
@@ -155,9 +160,7 @@ public class UserAPITest {
 		Database db = Database.getInstance();
 		return new Object[][]{
 			{db.getUserByToken("SaraSamer"), db.getUserByToken("AhmedWessam"), true},
-			//{db.getUserByToken("SaraSamer"), db.getUserByToken("AhmedWessam"), false},
-			//{db.getUserByToken("SalmaEssam"), new User() , false},
-			{db.getUserByToken("firstlast"), db.getUserByToken("SalmaEssam") , false},
+			{db.getUserByToken("firstlast"), db.getUserByToken("SalmaEssam") , false}
 		};
 	}
 	
