@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 
+import javax.sound.midi.Receiver;
+
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -141,14 +143,17 @@ public class UserAPITest {
 		Database db = Database.getInstance();
 		return new Object[][]{
 			{db.getUserByToken("SaraSamer"), db.getUserByToken("AhmedWessam"), true},
-			{db.getUserByToken("SaraSamer"), db.getUserByToken("AhmedWessam"), false},
+			{db.getUserByToken("SaraSamer"), db.getUserByToken("SalmaEssam"), true},
+			{db.getUserByToken("AhmedWessam"), db.getUserByToken("SaraSamer"), false},
+			{db.getUserByToken("SalmaEssam"), db.getUserByToken("AhmedWessam"), true},
 			{db.getUserByToken("SalmaEssam"), new User() , false},
 			{db.getUserByToken("firstlast"), db.getUserByToken("SalmaEssam") , true},
 			{db.getUserByToken("SalmaEssam"), db.getUserByToken("firstlast") , false},
+			{db.getUserByToken("AhmedWessam"), db.getUserByToken("firstlast") , true}
 		};
 	}
 	
-	@Test(dataProvider = "friendRequest", enabled = true)
+	@Test(dataProvider = "friendRequest", enabled = false)
 	public void friendRequest(User sender, User reciever, boolean expected){
 		boolean added = UserAPI.addFriend(sender, reciever);
 		ArrayList<User> requests = reciever.getFriendRequests();
@@ -158,16 +163,31 @@ public class UserAPITest {
 	@DataProvider(name = "acceptFriendRequest")
 	public Object[][] testAcceptFriendRequest(){
 		Database db = Database.getInstance();
+		User sara = db.getUserByToken("SaraSamer");
+		User salma = db.getUserByToken("SalmaEssam");
+		User ahmed = db.getUserByToken("AhmedWessam");
+		User first = db.getUserByToken("firstlast");
+		UserAPI.addFriend(sara, ahmed);
+		UserAPI.addFriend(sara, salma);
+		UserAPI.addFriend(salma, ahmed);
+		UserAPI.addFriend(first, salma);
+		UserAPI.addFriend(ahmed, first);
 		return new Object[][]{
-			{db.getUserByToken("SaraSamer"), db.getUserByToken("AhmedWessam"), true},
-			{db.getUserByToken("firstlast"), db.getUserByToken("SalmaEssam") , false}
+			{sara, ahmed, true},
+			{salma, ahmed, false},
+			{sara, salma, true},
+			{first, salma , false},
+			{ahmed, first, true},
 		};
 	}
 	
-	@Test(dataProvider = "acceptFriendRequest", enabled = true)
-	public void acceptFriendRequest(User sender, User reciever, boolean expected){
+	@Test(dataProvider = "acceptFriendRequest", enabled = false)
+	public void acceptFriendRequest(User sender, User reciever, boolean expectedResponse){
 		FriendRequest fr = new FriendRequest(sender , reciever);
-		fr.setResponse(expected);
-		Assert.assertEquals(fr.getResponse() , expected);
+		fr.setResponse(expectedResponse);
+		ArrayList<User> senderFriendList = sender.getFriendsList();
+		ArrayList<User> receiverFriendList = reciever.getFriendsList();
+		boolean added = senderFriendList.contains(reciever) && receiverFriendList.contains(sender);
+		Assert.assertEquals(added, expectedResponse);
 	}
 }

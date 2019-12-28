@@ -1,9 +1,9 @@
 class FriendRequest extends Notification{
-    private User friend;
+    private User receiver;
     private User sender;
     private boolean response;
-    public FriendRequest(User sender , User friend){
-    	this.friend = friend;
+    public FriendRequest(User sender , User receiver){
+    	this.receiver = receiver;
     	this.sender = sender;
     }
     public boolean getResponse() {
@@ -17,15 +17,13 @@ class FriendRequest extends Notification{
     		this.response = reject();
     }
     public boolean accept(){
-    	friend.removeFromFriendRequests(sender);
-    	friend.addToFriendsList(sender);
-    	sender.addToFriendsList(friend);
-    	setResponse(true);
+    	receiver.removeFromFriendRequests(sender);
+    	receiver.addToFriendsList(sender);
+    	sender.addToFriendsList(receiver);
     	return true;
     }
     public boolean reject(){
-    	friend.removeFromFriendRequests(sender);
-    	setResponse(false);
+    	receiver.removeFromFriendRequests(sender);
     	return false;
     }
     
